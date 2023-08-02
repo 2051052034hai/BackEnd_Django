@@ -19,9 +19,8 @@ class User(AbstractUser):
     address = models.CharField(max_length=50, null=True)
     phone = models.CharField(max_length=10, null= True)
     role = models.IntegerField(choices=UserRoleEnum.choices, default=UserRoleEnum.CUSTOMER)
-    avatar = models.ImageField(upload_to="sales/%Y/%m", null=True)
+    avatar = models.ImageField(upload_to="users/%Y/%m", null=True)
     accumulatePoint = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-
     def __str__(self):
         return self.username
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Category
+from .models import Product, Category, User
 from  django import  forms
 from  ckeditor_uploader.widgets import CKEditorUploadingWidget
 
@@ -11,6 +11,9 @@ class ProductForm(forms.ModelForm):
         fields = '__all__'
 
 
+# class UsersAdmin(admin.ModelAdmin):
+#         list_display = ['id', 'username', 'password', 'address', 'avatar']
+
 class ProductAdmin(admin.ModelAdmin):
     form = ProductForm
     list_display = ['id', 'name', 'description', 'unitPrice', 'unitsInStock']
@@ -21,5 +24,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ['id', 'name']
 
 
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
+# admin.site.register(User, UsersAdmin)
