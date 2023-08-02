@@ -15,6 +15,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -25,6 +26,7 @@ SECRET_KEY = 'django-insecure-)3oj2r12$1mce&*!()kes@*=(r3)ds_#g$c@x9dql$k_6p761^
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
 
 # Application definition
 
@@ -42,19 +44,13 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'oauth2_provider',
     'corsheaders',
-    'storages',
-    'cloudinary_storage',
-    'drf_spectacular',
 ]
 
 REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-    ),
-
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-
+    'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    )
 }
 
 MIDDLEWARE = [
@@ -70,12 +66,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'salesApp.urls'
 MEDIA_ROOT = '%s/sales/static/' % BASE_DIR
-MEDIA_URL = '%s/sales/static/'
-
-#
-# MEDIA_ROOT = BASE_DIR / 'media'
-#
-# MEDIA_URL = '/media/'
 
 TEMPLATES = [
     {
@@ -95,27 +85,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'salesApp.wsgi.application'
 
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 import pymysql
-
 pymysql.version_info = (1, 4, 3, "final", 0)
 pymysql.install_as_MySQLdb()
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'salewebdb',
-        'USER': 'root',
-        'PASSWORD': '12345678',
-        'HOST': ''  # mặc định localhost
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'salewebdb',
+    'USER': 'root',
+    'PASSWORD': '12345678',
+    'HOST': '' # mặc định localhost
     }
 }
 AUTH_USER_MODEL = "sales.User"
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
-    'http://localhost:3001',
     # Thêm các origin khác nếu cần
 ]
 # Password validation
@@ -136,10 +125,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-FILE_UPLOAD_HANDLERS = [
-    'django.core.files.uploadhandler.MemoryFileUploadHandler',
-    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
-]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -152,6 +137,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -161,14 +147,3 @@ CKEDITOR_UPLOAD_PATH = "ckeditor/product/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-import cloudinary
-
-cloudinary.config(
-    cloud_name="dagyf51bo",
-    api_key="782355449916747",
-    api_secret="ex3r-7to2iHTnf3rqvFNHjYr1ng"
-)
-
-CLIENT_ID = 'rg3J63pNFq4B9J0ChbpXUHHlIsbhsu6iSKQig2Zi'
-CLIENT_SECRET = 'pbkdf2_sha256$600000$PURRm1NO0ZaWA1LMYNPENJ$EPFACcnDizenS0EkDggOoZEGJlsEKoz8qA029Nvc2YA='
