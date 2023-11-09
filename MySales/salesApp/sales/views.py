@@ -1,9 +1,8 @@
-from . import serializers
 from .models import Category, Product, User, Bill, BillDetail
 from rest_framework import viewsets, generics, permissions, parsers, status
 from .serializers import CategorySerializer, ProductSerializer, UserSerializer, BillSerializer, BillDetailSerializer
-from .paginator import ProductPaginator
-from rest_framework.decorators import action, api_view
+from .paginator import ProductPaginator, ProductPagination
+from rest_framework.decorators import action
 from rest_framework.views import Response
 from django.db import transaction
 
@@ -12,12 +11,28 @@ class CategoryViewSet(viewsets.ViewSet, generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
+
     @action(methods=['get'], detail=True, url_path='products')
     def products(self, request, pk):
         c = self.get_object()
-        products = c.product_set.all()
+        products = c.product_set.all().order_by('id')
 
-        serializer = ProductSerializer(products, many=True, context={'request': request})
+        paginator = ProductPagination()  # Sử dụng lớp pagination cho API products
+        page_size = paginator.paginate_queryset(products, request)
+
+        serializer = ProductSerializer(page_size, many=True, context={'request': request})
+
+        additional_data = {
+            'page_size': paginator.page_size,  # Thêm page_size vào phản hồi
+            'product': serializer.data  # Dữ liệu từ serializer
+        }
+        return paginator.get_paginated_response(additional_data)
+
+    @action(methods=['get'], detail=True, url_path='get')
+    def categories(self, request, pk):
+        c = self.get_object()
+
+        serializer = CategorySerializer(c, context={'request': request})
         return Response(serializer.data)
 
 

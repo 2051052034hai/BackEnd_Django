@@ -11,8 +11,8 @@ class ProductForm(forms.ModelForm):
         fields = '__all__'
 
 
-# class UsersAdmin(admin.ModelAdmin):
-#         list_display = ['id', 'username', 'password', 'address', 'avatar']
+class UsersAdmin(admin.ModelAdmin):
+        list_display = ['id', 'username', 'password', 'address', 'avatar']
 
 class ProductAdmin(admin.ModelAdmin):
     form = ProductForm
@@ -27,4 +27,4 @@ class CategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
-# admin.site.register(User, UsersAdmin)
+admin.site.register(User, UsersAdmin)
